@@ -34,8 +34,7 @@ fn show_posts() {
     let migrations = diesel_migrations::FileBasedMigrations::find_migrations_directory().unwrap();
     conn.run_pending_migrations(migrations).unwrap();
 
-    let _ = Command::cargo_bin("show_posts")
-        .unwrap()
+    let _ = Command::new(assert_cmd::cargo::cargo_bin("show_posts"))
         .env("MYSQL_DATABASE_URL", db_url.to_string())
         .assert()
         .append_context("show_posts", "")
